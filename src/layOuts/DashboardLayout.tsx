@@ -5,22 +5,29 @@ import { Link, Outlet } from 'react-router-dom'
 type Props = {}
 
 const DashboardLayout = (props: Props) => {
-  // Initialize activeLink state with 'dashboard' to make it active by default
-  const [isNavBarExpanded, setIsNavBarExpanded] = useState(true)
-  const [activeLink, setActiveLink] = useState<string>('dashboard') // Default is 'dashboard'
+  const [isNavBarExpanded, setIsNavBarExpanded] = useState(true) // Default sidebar state
+  const [activeLink, setActiveLink] = useState<string>('dashboard') // Active link state
 
-  // Function to handle active link state change
+  // Function to handle active link state change and collapse sidebar on smaller screens
   const handleLinkClick = (link: string) => {
-    setActiveLink(link); // Set the clicked link as active
+    setActiveLink(link) // Set the clicked link as active
+    // Collapse sidebar only for small screens (less than 1024px width)
+    if (window.innerWidth < 1024) {
+      setIsNavBarExpanded(false) 
+    }
   }
 
   return (
     <div className="flex flex-col w-screen h-screen">
+      {/* Header Section */}
       <div className="w-full h-[3.5rem]">
         <ATMAppHeader setIsNavBarExpanded={setIsNavBarExpanded} />
       </div>
 
-      <div className="w-full h-[calc(100%-3.5rem)] flex lg:static relative ">
+      {/* Sidebar and Main Content Section */}
+      <div className="w-full h-[calc(100%-3.5rem)] flex lg:static relative">
+        
+        {/* Sidebar */}
         <div
           className={`h-full transition-all duration-500 overflow-x-hidden lg:static absolute z-50 ${
             isNavBarExpanded ? 'w-[270px] bg-slate-100' : 'w-0'
@@ -33,6 +40,7 @@ const DashboardLayout = (props: Props) => {
                   Dashboard
                 </div>
 
+                {/* Dashboard Link */}
                 <Link to="/" className="flex flex-col gap-1">
                   <div
                     className={`flex items-center justify-between w-full px-5 py-2 text-sm font-semibold transition-all duration-300 ease-in rounded ${
@@ -44,6 +52,7 @@ const DashboardLayout = (props: Props) => {
                   </div>
                 </Link>
 
+                {/* Employee Link */}
                 <Link to="employee" className="flex flex-col gap-1">
                   <div
                     className={`flex items-center justify-between w-full px-5 py-2 text-sm font-semibold transition-all duration-300 rounded ${
@@ -51,17 +60,20 @@ const DashboardLayout = (props: Props) => {
                     }`}
                     onClick={() => handleLinkClick('employee')}
                   >
-                   Employee
+                    Employee
                   </div>
                 </Link>
+
               </div>
             </div>
           </div>
         </div>
 
+        {/* Main Content */}
         <div className="flex-1 h-full p-2 overflow-auto">
           <Outlet />
         </div>
+
       </div>
     </div>
   )

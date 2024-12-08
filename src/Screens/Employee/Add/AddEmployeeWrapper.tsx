@@ -40,9 +40,20 @@ const validationSchema = Yup.object({
 
 
   const handleSubmit = async (values: any, { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }) => {
+  
     setSubmitting(true);
+
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("email", values.email);
+    formData.append("mobile", values.mobile);
+    formData.append("designation", values.designation);
+    formData.append("gender", values.gender);
+    formData.append("course", values.course);
+    formData.append("image", values.image);  // Append the image file
+
     try {
-      const response = await createEmployee(values);
+      const response = await createEmployee(formData).unwrap();
       const { status, message } = response.data;
       if (status) {
         toast.success(message);
@@ -51,6 +62,7 @@ const validationSchema = Yup.object({
         toast.error(message);
       }
     } catch (error) {
+      console.log(error)
       toast.error('Error adding category. Please try again.');
     } finally {
       setSubmitting(false);

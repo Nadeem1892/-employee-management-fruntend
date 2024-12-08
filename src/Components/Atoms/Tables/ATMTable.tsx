@@ -12,7 +12,6 @@ interface TableRow {
   gender: string;
   course: string;
   image: string;
-
 }
 
 interface TableWithPaginationProps {
@@ -34,7 +33,7 @@ const ATMTable: React.FC<TableWithPaginationProps> = ({
   totalData,
   totalPages,
   onPageChange,
-  getRowClass
+  getRowClass,
 }) => {
   const rowsPerPage = 5; // Adjust the number of rows per page
 
@@ -99,9 +98,15 @@ const ATMTable: React.FC<TableWithPaginationProps> = ({
         </thead>
         <tbody>
           {currentRows.map((row) => (
-            <tr key={row._id}  className={getRowClass(row)}>
+            <tr key={row._id} className={getRowClass(row)}>
               <td className="px-4 py-2 border border-gray-300">{row._id}</td>
-              <td className="px-4 py-2 border border-gray-300">{row.image}</td>
+              <td className="px-4 py-2 border border-gray-300">
+                <img
+                  src={`/${row?.image.replace(/\\/g, "/")}`}
+                  alt="image-employee"
+                  className="w-12 h-12 object-cover"
+                />
+              </td>
               <td className="px-4 py-2 border border-gray-300">{row.name}</td>
               <td className="px-4 py-2 border border-gray-300">{row.email}</td>
               <td className="px-4 py-2 border border-gray-300">{row.mobile}</td>
@@ -112,8 +117,11 @@ const ATMTable: React.FC<TableWithPaginationProps> = ({
               <td className="px-4 py-2 border border-gray-300">{row.course}</td>
               <td className="flex gap-2 px-4 py-2 border border-gray-300">
                 {/* Action buttons like Delete, Edit, etc. */}
-                <Link to={`/dashboard/employee-edit/${row._id}`} className="text-sky-500 hover:text-sky-800">
-                      <FaRegEdit className="text-2xl lg:text-xl" />
+                <Link
+                  to={`/dashboard/employee-edit/${row._id}`}
+                  className="text-sky-500 hover:text-sky-800"
+                >
+                  <FaRegEdit className="text-2xl lg:text-xl" />
                 </Link>
                 <button
                   onClick={() => onDelete(row._id)}
