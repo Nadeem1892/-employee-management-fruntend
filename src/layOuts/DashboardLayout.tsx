@@ -33,27 +33,27 @@ const DashboardLayout = (props: Props) => {
                   Dashboard
                 </div>
 
-                <div className="flex flex-col gap-1">
+                <Link to="/" className="flex flex-col gap-1">
                   <div
                     className={`flex items-center justify-between w-full px-5 py-2 text-sm font-semibold transition-all duration-300 ease-in rounded ${
                       activeLink === 'dashboard' ? 'bg-green-300 text-white border-l-4 border-green-500' : 'bg-transparent'
                     }`}
                     onClick={() => handleLinkClick('dashboard')}
                   >
-                    <Link to="/">Dashboard</Link>
+                    Dashboard
                   </div>
-                </div>
+                </Link>
 
-                <div className="flex flex-col gap-1">
+                <Link to="employee" className="flex flex-col gap-1">
                   <div
                     className={`flex items-center justify-between w-full px-5 py-2 text-sm font-semibold transition-all duration-300 rounded ${
                       activeLink === 'employee' ? 'bg-green-300 text-white border-l-4 border-green-500' : 'bg-transparent'
                     }`}
                     onClick={() => handleLinkClick('employee')}
                   >
-                    <Link to="employee">Employee</Link>
+                   Employee
                   </div>
-                </div>
+                </Link>
               </div>
             </div>
           </div>

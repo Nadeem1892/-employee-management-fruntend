@@ -1,7 +1,7 @@
 import { IconMenu2 } from '@tabler/icons-react';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { clearToken } from '../../../Service/Slices/Auth/AuthSlice';
 // import { clearToken } from '../../store/authSlice'; // Adjust the path
 
@@ -14,7 +14,7 @@ const ATMAppHeader = ({ setIsNavBarExpanded }: Props) => {
   const dispatch = useDispatch();
 
   // Access the token from Redux store
-  const token = useSelector((state: any) => state.auth.token);
+  // const token = useSelector((state: any) => state.auth.token);
   const userName = localStorage.getItem('userName') || 'Guest'; // You can replace this with a Redux state for userName if necessary
 
   // Logout function to clear token and userName from Redux store and localStorage
